@@ -1,4 +1,4 @@
-package paghiper
+package request
 
 import (
 	"bytes"
@@ -6,11 +6,12 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 )
 
 // makeRequest sends a HTTP POST request with a JSON payload to the specified endpoint and returns
 // the response as a map[string]interface{}, along with the HTTP status code and any errors encountered.
-func makeRequest(endpoint, action string, payload interface{}) (map[string]interface{}, int, error) {
+func Make(endpoint, action string, payload interface{}) (map[string]interface{}, int, error) {
 	// Convert the payload to JSON
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
@@ -49,7 +50,7 @@ func makeRequest(endpoint, action string, payload interface{}) (map[string]inter
 
 	var ref string
 	// If the endpoint is the PIX endpoint, set a reference string to "pix_"
-	if endpoint == PIX_ENDPOINT {
+	if strings.Contains(endpoint, "pix") {
 		ref = "pix_"
 	}
 
@@ -70,7 +71,7 @@ func makeRequest(endpoint, action string, payload interface{}) (map[string]inter
 // validateRequestResponse checks if the "result" key is "reject" or if the HTTP status code
 // is greater than http.StatusCreated, and returns an error with the "response_message" key
 // from the response.
-func validateRequestResponse(r map[string]interface{}, c int) error {
+func ValidateRequestResponse(r map[string]interface{}, c int) error {
 	if r["result"] == "reject" || c > http.StatusCreated {
 		return fmt.Errorf("%v", r["response_message"])
 	}
@@ -79,7 +80,7 @@ func validateRequestResponse(r map[string]interface{}, c int) error {
 }
 
 // setResponse converts a map[string]interface{} to JSON and decodes it into the specified struct.
-func setResponse(r map[string]interface{}, s interface{}) error {
+func SetResponse(r map[string]interface{}, s interface{}) error {
 	// Convert the map to JSON
 	j, err := json.Marshal(r)
 	if err != nil {
