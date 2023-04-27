@@ -12,13 +12,13 @@ import (
 type Payer struct {
 	// CpfCnpj represents the payer's individual taxpayer identification number (CPF) or
 	// legal entity identifier (CNPJ).
-	CpfCnpj string `json:"payer_cpf_cnpj"`
+	CpfCnpj string `json:"payer_cpf_cnpj,omitempty"`
 
 	// Email is the email address of the payer.
-	Email string `json:"payer_email"`
+	Email string `json:"payer_email,omitempty"`
 
 	// Name is the name of the payer.
-	Name string `json:"payer_name"`
+	Name string `json:"payer_name,omitempty"`
 
 	// Phone is the phone number of the payer.
 	Phone int32 `json:"payer_phone,omitempty"`
