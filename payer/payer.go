@@ -46,7 +46,7 @@ type Payer struct {
 }
 
 // ValidatePayer validates a Payer struct, returning an error if any required fields are missing.
-func ValidatePayer(p Payer) error {
+func (p *Payer) ValidatePayer() error {
 	// Check if Email is set
 	if strings.TrimSpace(p.Email) == "" {
 		return errors.New("Email is required")
