@@ -49,16 +49,16 @@ type Payer struct {
 func (p *Payer) ValidatePayer() error {
 	// Check if Email is set
 	if strings.TrimSpace(p.Email) == "" {
-		return errors.New("Email is required")
+		return errors.New("email is required")
 	}
 
 	if _, err := mail.ParseAddress(p.Email); err != nil {
-		return errors.New("Email is invalid")
+		return errors.New("email is invalid")
 	}
 
 	// Check if Name is set
 	if strings.TrimSpace(p.Name) == "" {
-		return errors.New("Name is required")
+		return errors.New("name is required")
 	}
 
 	// Check if CpfCnpj is set and is valid
